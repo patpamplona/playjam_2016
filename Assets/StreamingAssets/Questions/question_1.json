@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 1,
+	
+	"category": "THREE_LETTERS",
+	
+	"question": "People need this but it is not solid or liquid.",
+	
+	"answer": "air"
+}

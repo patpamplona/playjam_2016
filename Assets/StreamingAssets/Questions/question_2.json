@@ -1,0 +1,11 @@
+{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 2,
+	
+	"category": "THREE_LETTERS",
+	
+	"question": "This cannot fly and cannot swim but this is a something that you ride.",
+	
+	"answer": "car"
+}
