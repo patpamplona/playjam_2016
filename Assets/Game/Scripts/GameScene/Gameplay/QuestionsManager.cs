@@ -30,6 +30,8 @@ public class QuestionsManager : MonoBehaviour
     private List<LetterButton> letterButtons;
     private List<AnswerButton> answerButtons;
 
+    private List<int> questionsAsked;
+
     private int categoryLevel     = ((int)QUESTION_CATEGORY.THREE_LETTERS) - 1;
     private char[] answerInBoard;
     private int questionsAnswered = 0;
@@ -75,6 +77,7 @@ public class QuestionsManager : MonoBehaviour
 
     public void ChangeCategory()
     {
+        this.questionsAnswered = 0;
         this.categoryLevel++;
 
         while(this.answerButtons.Count < this.categoryLevel)
@@ -123,6 +126,23 @@ public class QuestionsManager : MonoBehaviour
         this.ResetButtons();
 
         int index = Random.Range(0, this.questionSet.questionSet.Length);
+
+        if(this.questionsAsked == null)
+        {
+            this.questionsAsked = new List<int>();
+        }
+
+        while(this.questionsAsked.Contains(index))
+        {
+            index = Random.Range(0, this.questionSet.questionSet.Length);
+        }
+
+        this.questionsAsked.Add(index);
+        if(this.questionsAsked.Count > 3)
+        {
+            this.questionsAsked.RemoveAt(0);
+        }
+
         if(index < 0 || index >= this.questionSet.questionSet.Length)
         {
             Debug.LogWarning("INDEX OUT OF BOUNDS [ " + index + " ] CANNOT GET QUESTION.");
@@ -181,6 +201,7 @@ public class QuestionsManager : MonoBehaviour
             if(correct)
             {
                 this.questionsAnswered++;
+                this.ResetButtons();
 
                 if(this.questionsAnswered >= questionsPerWall)
                 {
@@ -191,6 +212,7 @@ public class QuestionsManager : MonoBehaviour
                     else
                     {
                         this.ChangeCategory();
+                        this.AskAQuestion();
                     }
                 }
                 else
