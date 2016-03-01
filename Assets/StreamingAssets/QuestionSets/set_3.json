@@ -1,28 +1,28 @@
 ﻿{
 	"__Type": "QuestionSet, Assembly-CSharp",
 	
-	"id": 1,
+	"id": 3,
 	
 	"category": "THREE_LETTERS",
 	
 	"charactersInChoices": 
 		[
-			"c",
-			"s",
-			"i",
-			"k",
+			"e",
 			"a",
-			"r",
+			"y",
+			"s",
+			"e",
 			"t",
-			"e"
+			"l",
+			"a"
 		],
 	
 	"questionSet": 
 		[
-			1,
-			2,
-			3,
-			10,
-			31
+			5,
+			8,
+			9,
+			11,
+			10
 		]
 }
