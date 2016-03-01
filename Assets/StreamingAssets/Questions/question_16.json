@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 16,
+	
+	"category": "FOUR_LETTERS",
+	
+	"question": "Opposite of less.",
+	
+	"answer": "more"
+}

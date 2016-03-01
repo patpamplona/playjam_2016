@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 32,
+	
+	"category": "FOUR_LETTERS",
+	
+	"question": "Past participle of be.",
+	
+	"answer": "been"
+}

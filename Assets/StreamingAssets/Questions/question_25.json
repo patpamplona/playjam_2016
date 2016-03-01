@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 25,
+	
+	"category": "FOUR_LETTERS",
+	
+	"question": "Building with shops, restaurants and other services.",
+	
+	"answer": "mall"
+}

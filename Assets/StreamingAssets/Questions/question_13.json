@@ -1,11 +1,11 @@
 ﻿{
 	"__Type": "QuestionData, Assembly-CSharp",
 	
-	"id": 1,
+	"id": 13,
 	
 	"category": "THREE_LETTERS",
 	
-	"question": "Fill in the blank. Solid, liquid and ___.",
+	"question": "Past participle of get.",
 	
-	"answer": "air"
+	"answer": "got"
 }

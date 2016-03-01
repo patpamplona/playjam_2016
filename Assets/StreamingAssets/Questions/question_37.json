@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 37,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "Combination of rain, strong wind and lightning.",
+	
+	"answer": "storm"
+}

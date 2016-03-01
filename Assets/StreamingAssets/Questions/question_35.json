@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 35,
+	
+	"category": "FOUR_LETTERS",
+	
+	"question": "Structure that blocks paths or encloses a building.",
+	
+	"answer": "wall"
+}

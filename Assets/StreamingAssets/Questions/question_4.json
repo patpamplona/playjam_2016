@@ -1,11 +1,11 @@
 ﻿{
 	"__Type": "QuestionData, Assembly-CSharp",
 	
-	"id": 1,
+	"id": 4,
 	
 	"category": "THREE_LETTERS",
 	
-	"question": "Fill in the blank. Solid, liquid and ___.",
+	"question": "Opposite of good",
 	
-	"answer": "air"
+	"answer": "bad"
 }

@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 39,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "Twelve periods in a year.",
+	
+	"answer": "month"
+}

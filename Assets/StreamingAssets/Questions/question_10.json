@@ -1,11 +1,11 @@
 ﻿{
 	"__Type": "QuestionData, Assembly-CSharp",
 	
-	"id": 1,
+	"id": 10,
 	
 	"category": "THREE_LETTERS",
 	
-	"question": "Fill in the blank. Solid, liquid and ___.",
+	"question": "Past of eat.",
 	
-	"answer": "air"
+	"answer": "ate"
 }

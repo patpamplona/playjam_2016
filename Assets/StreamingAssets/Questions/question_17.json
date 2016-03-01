@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 17,
+	
+	"category": "FOUR_LETTERS",
+	
+	"question": "Opposite of odd.",
+	
+	"answer": "even"
+}

@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 40,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "Organ that pumps blood through the circulatory system.",
+	
+	"answer": "heart"
+}
