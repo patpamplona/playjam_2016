@@ -27,9 +27,9 @@ public class QuestionsPool
         List<QuestionData> data = new List<QuestionData>();
 
 #if UNITY_EDITOR_WIN
-		LoadList<QuestionSet>("QuestionSets\\", "questionnaire.json", ref sets);
-		LoadList<QuestionData>("Questions\\", "questions.json", ref data);
-#elif
+        LoadList<QuestionSet>("QuestionSets\\", "questionnaire.json", ref sets);
+        LoadList<QuestionData>("Questions\\", "questions.json", ref data);
+#else
         LoadList<QuestionSet>("QuestionSets/", "questionnaire.json", ref sets);
         LoadList<QuestionData>("Questions/", "questions.json", ref data);
 #endif
@@ -92,8 +92,6 @@ public class QuestionsPool
         string fileNames = GameUtils.LoadAppFile(filePath + fName);
         fileNames = fileNames.Trim();
 
-		Debug.Log("Loaded File List " + fileNames);
-
 		JsonReader fileNamesReader = new JsonReader(fileNames);
         string[] fileNamesArr = fileNamesReader.Deserialize<string[]>();
 
@@ -103,8 +101,6 @@ public class QuestionsPool
             {
                 string content = GameUtils.LoadAppFile(filePath + fileName + ".json");
                 content        = content.Trim();
-
-				Debug.Log("Loaded Content " + content);
 
                 JsonReader reader = new JsonReader(content);
                 T dataToAdd       = reader.Deserialize<T>();
