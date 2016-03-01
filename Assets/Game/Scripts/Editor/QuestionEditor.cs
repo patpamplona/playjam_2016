@@ -10,7 +10,8 @@ public class QuestionEditor : EditorWindow
     public static void GetWindow()
     {
         QuestionEditor editor = EditorWindow.GetWindow<QuestionEditor>("Question Set Editor");
-        editor.minSize = new Vector2(480, 320);
+        editor.minSize = new Vector2(1200, 1020);
+        editor.maxSize = new Vector2(1200, 1020);
     }
 
 	#region Editor
@@ -32,16 +33,16 @@ public class QuestionEditor : EditorWindow
 	{
 		GUILayout.BeginHorizontal();
 
-		GUILayout.BeginVertical("box");
+        GUILayout.BeginVertical("box", GUILayout.Width(175));
 		this.DrawQuestionSets();
 		GUILayout.EndVertical();
 
-		GUILayout.BeginVertical("box");
+        GUILayout.BeginVertical("box", GUILayout.Width(575));
 		this.DrawSelectedQuestionSet();
 		GUILayout.EndVertical();
 
-		GUILayout.BeginVertical("box");
-
+        GUILayout.BeginVertical("box", GUILayout.Width(425));
+        this.DrawQuestionDataEditor();
 		GUILayout.EndVertical();
 
 		GUILayout.EndHorizontal();
@@ -53,6 +54,7 @@ public class QuestionEditor : EditorWindow
 	{
 		this.questionSetScroll = GUILayout.BeginScrollView(this.questionSetScroll);
 
+        GUILayout.BeginHorizontal();
 		if(GUILayout.Button("Add Set"))
 		{
 			QuestionSet newSet 		   = new QuestionSet();
@@ -64,9 +66,16 @@ public class QuestionEditor : EditorWindow
 			this.questionSets.Add(newSet);
 		}
 
+        if(GUILayout.Button("Save All"))
+        {
+            this.SaveQuestionnaire();
+            this.SaveQuestionSets();
+        }
+        GUILayout.EndHorizontal();
+
 		foreach(QuestionSet qSet in this.questionSets)
 		{
-			if(GUILayout.Button("set_" + qSet.id, qSet == selectedSet ? EditorStyles.boldLabel : EditorStyles.miniLabel))
+            if(GUILayout.Button("set_" + qSet.id, (selectedSet != null && qSet == selectedSet) ? EditorStyles.boldLabel : EditorStyles.miniLabel))
 			{
 				selectedSet = qSet;
 			}
@@ -75,6 +84,7 @@ public class QuestionEditor : EditorWindow
 		GUILayout.EndScrollView();
 	}
 
+    private Vector2 questionSetInfoScroll;
 	private void DrawSelectedQuestionSet()
 	{
 		if(this.selectedSet == null)
@@ -85,12 +95,14 @@ public class QuestionEditor : EditorWindow
 		{
 			if(GUILayout.Button("Save Question Set"))
 			{
-				Save<QuestionSet>(streamingAssets + questionSetsPath + "set_" + this.selectedSet.id + ".json", this.selectedSet);
+				this.Save<QuestionSet>(streamingAssets + questionSetsPath + "set_" + this.selectedSet.id + ".json", this.selectedSet);
 				this.SaveQuestionnaire();
 			}
 
 			this.selectedSet.id		  = EditorGUILayout.IntField("Question Set ID : ", this.selectedSet.id);
 			this.selectedSet.category = (QUESTION_CATEGORY)EditorGUILayout.EnumPopup("Set Category", this.selectedSet.category);
+
+            this.questionSetInfoScroll = GUILayout.BeginScrollView(this.questionSetInfoScroll);
 
 			GUILayout.BeginVertical("box");
 			this.DrawChoicesArray();
@@ -99,6 +111,8 @@ public class QuestionEditor : EditorWindow
 			GUILayout.BeginVertical("box");
 			this.DrawQuestionIDs();
 			GUILayout.EndVertical();
+
+            GUILayout.EndScrollView();
 		}
 	}
 
@@ -174,12 +188,16 @@ public class QuestionEditor : EditorWindow
 		{
 			GUILayout.BeginHorizontal();
 
-			if(GUILayout.Button("X"))
+            if(GUILayout.Button("X", GUILayout.Width(75), GUILayout.Height(75)))
 			{
 				indexToRemove = i;
 			}
 			
+            GUILayout.BeginVertical("box");
 			this.selectedSet.questionSet[i] = EditorGUILayout.IntField("Question id " + (i + 1), this.selectedSet.questionSet[i]);
+
+            this.DrawQuestionData(this.GetQuestionData(this.selectedSet.questionSet[i]));
+            GUILayout.EndVertical();
 
 			GUILayout.EndHorizontal();
 		}
@@ -193,6 +211,106 @@ public class QuestionEditor : EditorWindow
 			remove = null;
 		}
 	}
+
+    private void DrawQuestionData(QuestionData data)
+    {
+        if(data == null)
+        {
+            GUILayout.Label("Question does not exist.");
+        }
+        else
+        {
+            GUILayout.Label("Q: " + data.question);
+            GUILayout.Label("A: " + data.answer);
+        }
+    }
+
+    private QuestionData GetQuestionData(int id)
+    {
+        bool searching = true;
+        for(int forward = id, backward = id - 1; searching; forward++, backward--)
+        {
+            if(forward >= 0 && forward < this.questionsList.Count)
+            {
+                if(this.questionsList[forward].id == id)
+                {
+                    return this.questionsList[forward];
+                }
+            }
+
+            if(backward >= 0 && backward < this.questionsList.Count)
+            {
+                if(this.questionsList[backward].id == id)
+                {
+                    return this.questionsList[backward];
+                }
+            }
+
+            if((forward < 0 || forward >= this.questionsList.Count) && (backward < 0 || backward >= this.questionsList.Count))
+            {
+                searching = false;
+            }
+        }
+
+        return null;
+    }
+
+    private Vector2 questionDataScroll;
+    private QUESTION_CATEGORY categoryFilter = QUESTION_CATEGORY.THREE_LETTERS;
+    private void DrawQuestionDataEditor()
+    {
+        this.DrawQuestionDataControl();
+        this.DrawQuestionCategoryFilter();
+        this.DrawQuestionDataList();
+    }
+
+    private void DrawQuestionDataControl()
+    {
+        GUILayout.BeginHorizontal("box");
+        if(GUILayout.Button("Add a question"))
+        {
+            QuestionData data = new QuestionData();
+            data.id           = this.questionsList.Count + 1;
+            data.category     = this.categoryFilter;
+            data.question     = "What is your question?";
+            data.answer       = "This is the answer.";
+
+            this.questionsList.Add(data);
+        }
+
+        if(GUILayout.Button("Save questions"))
+        {
+            this.SaveQuestions();
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    private void DrawQuestionCategoryFilter()
+    {
+        this.categoryFilter = (QUESTION_CATEGORY)EditorGUILayout.EnumPopup("Filter Category", this.categoryFilter);
+    }
+
+    private void DrawQuestionDataList()
+    {
+        this.questionDataScroll = GUILayout.BeginScrollView(this.questionDataScroll);
+
+        for(int q = 0; q < this.questionsList.Count; q++)
+        {
+            if(this.categoryFilter != this.questionsList[q].category)
+            {
+                continue;
+            }
+
+            GUILayout.BeginVertical("box");
+            this.questionsList[q].id       = EditorGUILayout.IntField("Question ID: ", this.questionsList[q].id);
+            this.questionsList[q].category = (QUESTION_CATEGORY)EditorGUILayout.EnumPopup("Set Category", this.questionsList[q].category);
+            this.questionsList[q].question = EditorGUILayout.TextField("Question: ", this.questionsList[q].question);
+            this.questionsList[q].answer   = EditorGUILayout.TextField("Answer: ",   this.questionsList[q].answer.ToLower());
+            GUILayout.EndVertical();
+        }
+
+        GUILayout.EndScrollView();
+    }
 	#endregion
 
 	#region Saving and Loading
@@ -205,6 +323,30 @@ public class QuestionEditor : EditorWindow
         }
 
         this.Save<string[]>(streamingAssets + questionSetsPath + questionnaire, questions);
+    }
+
+    private void SaveQuestionSets()
+    {
+        foreach(QuestionSet qSet in this.questionSets)
+        {
+            this.Save<QuestionSet>(streamingAssets + questionSetsPath + "set_" + qSet.id + ".json", qSet);
+        }
+    }
+
+    private void SaveQuestions()
+    {
+        string[] questions = new string[this.questionsList.Count];
+        for(int i = 0; i < questions.Length; i++)
+        {
+            questions[i] = "question_" + this.questionsList[i].id.ToString();
+        }
+
+        this.Save<string[]>(streamingAssets + questionsPath + questionsFile, questions);
+
+        foreach(QuestionData question in this.questionsList)
+        {
+            this.Save<QuestionData>(streamingAssets + questionsPath + "question_" + question.id + ".json", question);
+        }
     }
 
     private static void Save<T>(string file, T data)
@@ -227,7 +369,7 @@ public class QuestionEditor : EditorWindow
 	private static string questionsPath     = "Questions\\";
 	private static string questionnaire     = "questionnaire.json";
 	private static string questionsFile     = "questions.json";
-#elif
+#else
     private static string streamingAssets   = Application.dataPath + "/StreamingAssets/";
     private static string questionSetsPath  = "QuestionSets/";
     private static string questionsPath     = "Questions/";
