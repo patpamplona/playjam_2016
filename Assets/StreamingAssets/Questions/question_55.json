@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 55,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "Process of producing text using devices to transfer texts to papers.",
+	
+	"answer": "print"
+}

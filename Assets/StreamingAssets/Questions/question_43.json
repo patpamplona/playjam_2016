@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 43,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "Unfasten or undo a cord.",
+	
+	"answer": "untie"
+}

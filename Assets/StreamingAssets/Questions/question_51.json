@@ -1,0 +1,11 @@
+﻿{
+	"__Type": "QuestionData, Assembly-CSharp",
+	
+	"id": 51,
+	
+	"category": "FIVE_LETTERS",
+	
+	"question": "A sheet of information in the form of a table, graph, or diagram.",
+	
+	"answer": "chart"
+}
