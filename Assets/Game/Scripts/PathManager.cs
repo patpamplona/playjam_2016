@@ -62,6 +62,11 @@ public class PathManager : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        QuestionsManager.Instance.ToggleQuestionnaire(false);
+    }
+
     void OnDestroy()
     {
         instance = null;
