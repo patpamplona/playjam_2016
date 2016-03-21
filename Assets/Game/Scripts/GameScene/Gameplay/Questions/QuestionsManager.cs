@@ -212,16 +212,11 @@ public class QuestionsManager : MonoBehaviour
 
                 if(this.questionsAnswered >= questionsPerWall)
                 {
+                    PathManager.Instance.UnlockWall();
+
                     if(this.categoryLevel == (int)QUESTION_CATEGORY.FIVE_LETTERS)
                     {
                         GameplayManager.Instance.PlayerExitsSafely();
-                    }
-                    else
-                    {
-                        //this.ChangeCategory();
-                        //this.AskAQuestion();
-
-                        PathManager.Instance.UnlockWall();
                     }
                 }
                 else
