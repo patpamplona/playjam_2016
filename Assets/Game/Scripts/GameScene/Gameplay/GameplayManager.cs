@@ -77,8 +77,6 @@ public class GameplayManager : MonoBehaviour
     public void StartGame()
     {
         this.gameStarted = true;
-        QuestionsManager.Instance.ChangeCategory();
-        QuestionsManager.Instance.AskAQuestion();
         this.pauseOverlay.SetActive(false);
     }
 
