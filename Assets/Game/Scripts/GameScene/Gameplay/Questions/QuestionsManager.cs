@@ -27,6 +27,13 @@ public class QuestionsManager : MonoBehaviour
     [SerializeField] private Transform answersParent;
     [SerializeField] private Transform choicesParent;
 
+    [SerializeField] private GameObject mainObject;
+
+    public void ToggleQuestionnaire(bool toggle)
+    {
+        this.mainObject.SetActive(toggle);
+    }
+
     private List<LetterButton> letterButtons;
     private List<AnswerButton> answerButtons;
 
@@ -211,8 +218,10 @@ public class QuestionsManager : MonoBehaviour
                     }
                     else
                     {
-                        this.ChangeCategory();
-                        this.AskAQuestion();
+                        //this.ChangeCategory();
+                        //this.AskAQuestion();
+
+                        PathManager.Instance.UnlockWall();
                     }
                 }
                 else
