@@ -34,7 +34,7 @@ public class PathManager : MonoBehaviour
         this.wall.SetActive(true);
 
         Vector3 local = this.wall.transform.localPosition;
-        local.x = -roomSize;
+        local.x = -this.wall.transform.localScale.x;
         this.wall.transform.localPosition = local;
 
         this.wall.transform.DOLocalMoveX(0.0f, 1.0f).OnComplete(
@@ -49,7 +49,7 @@ public class PathManager : MonoBehaviour
     public void UnlockWall()
     {
         QuestionsManager.Instance.ToggleQuestionnaire(false);
-        this.wall.transform.DOLocalMoveX(-roomSize, 1.0f).OnComplete(
+        this.wall.transform.DOLocalMoveX(-this.wall.transform.localScale.x, 1.0f).OnComplete(
         delegate()
         {
             this.isBlockedByWall = false;
