@@ -100,6 +100,7 @@ public class QuestionsManager : MonoBehaviour
     private void InitializeSet()
     {
         this.questionSet = QuestionsPool.GetRandomQuestionSet((QUESTION_CATEGORY)this.categoryLevel);
+        Debug.Log("Setting question set : " + this.questionSet.id);
 
         if(this.questionSet == null)
         {
@@ -139,12 +140,12 @@ public class QuestionsManager : MonoBehaviour
             this.questionsAsked = new List<int>();
         }
 
-        while(this.questionsAsked.Contains(index))
+        while(this.questionsAsked.Contains(this.questionSet.questionSet[index]))
         {
             index = Random.Range(0, this.questionSet.questionSet.Length);
         }
 
-        this.questionsAsked.Add(index);
+        this.questionsAsked.Add(this.questionSet.questionSet[index]);
         if(this.questionsAsked.Count > 3)
         {
             this.questionsAsked.RemoveAt(0);
@@ -221,6 +222,7 @@ public class QuestionsManager : MonoBehaviour
                 }
                 else
                 {
+                    this.InitializeSet();
                     this.AskAQuestion();
                 }
             }
