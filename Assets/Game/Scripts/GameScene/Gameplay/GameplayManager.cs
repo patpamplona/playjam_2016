@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -41,9 +42,16 @@ public class GameplayManager : MonoBehaviour
         this.gameOver = false;
     }
 
+    void Start()
+    {
+        InfoMessenger.Reset();
+    }
+
     void OnDestroy()
     {
         instance = null;
+        this.runTime = 0.0f;
+        this.gameOver = false;
     }
 
     void Update()
@@ -71,6 +79,9 @@ public class GameplayManager : MonoBehaviour
             {
                 CentralizedTimeUp();
             }
+
+            InfoMessenger.SetPlayerWin(false);
+            SceneManager.LoadScene("EndScene");
         }
     }
 
@@ -83,5 +94,7 @@ public class GameplayManager : MonoBehaviour
     public void PlayerExitsSafely()
     {
         this.gameOver = true;
+        InfoMessenger.SetPlayerWin(true);
+        SceneManager.LoadScene("EndScene");
     }
 }

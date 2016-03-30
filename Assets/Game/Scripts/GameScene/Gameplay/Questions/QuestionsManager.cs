@@ -80,6 +80,8 @@ public class QuestionsManager : MonoBehaviour
     void OnDestroy()
     {
         instance = null;
+        this.letterButtons.Clear();
+        this.answerButtons.Clear();
     }
 
     public void ChangeCategory()
