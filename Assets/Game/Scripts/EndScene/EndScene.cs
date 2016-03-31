@@ -11,10 +11,20 @@ public class EndScene : MonoBehaviour
     {
         winScreen.SetActive(InfoMessenger.DidPlayerWin);
         loseScreen.SetActive(!InfoMessenger.DidPlayerWin);
+
+        if(InfoMessenger.DidPlayerWin)
+        {
+            AudioThang.Instance.PlayVictory();
+        }
+        else
+        {
+            AudioThang.Instance.PlayGameOver();
+        }
 	}
 
     public void OnReplay()
     {
+        AudioThang.Instance.PlayMainBGM();
         SceneManager.LoadScene("GameScene");
     }
 }
