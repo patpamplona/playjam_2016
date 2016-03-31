@@ -17,6 +17,8 @@ public class AudioThang : MonoBehaviour
     [SerializeField] private AudioSource bgm_mario;
     [SerializeField] private AudioSource correct;
     [SerializeField] private AudioSource incorrect;
+    [SerializeField] private AudioSource angryCat;
+    [SerializeField] private AudioSource angryDog;
 
     void Awake()
     {
@@ -60,5 +62,15 @@ public class AudioThang : MonoBehaviour
     {
         this.correct.Stop();
         this.incorrect.Play();
+    }
+
+    public void PlayAngryDog()
+    {
+        this.angryDog.Play();
+    }
+
+    public void PlayAngryCat()
+    {
+        this.angryCat.Play();
     }
 }
