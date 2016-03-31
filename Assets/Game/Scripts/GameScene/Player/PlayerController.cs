@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hiddenPosition;
     [SerializeField] private float runningPosition;
 
+    [SerializeField] private Animation catRunningAnim;
+
     void Awake()
     {
         _instance = this;
@@ -26,6 +28,9 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = this.transform.localPosition;
         pos.y = this.runningPosition;
         this.transform.localPosition = pos;
+
+        this.catRunningAnim.Stop();
+        GameplayManager.Instance.OnGameStarted += this.BeginRunning;
     }
 
     void OnDestroy()
@@ -33,13 +38,23 @@ public class PlayerController : MonoBehaviour
         _instance = null;
     }
 
+    private void BeginRunning()
+    {
+        this.catRunningAnim.Play();
+    }
+
     public void ShowPlayerToRun()
     {
-        this.transform.DOLocalMoveY(runningPosition, 0.75f).SetEase(Ease.OutQuad);
+        this.transform.DOLocalMoveY(runningPosition, 0.75f).SetEase(Ease.OutQuad).OnComplete(
+            delegate() 
+            {
+                this.BeginRunning();
+            });
     }
 
     public void HidePlayerToAnswer()
     {
+        this.catRunningAnim.Stop();
         this.transform.DOLocalMoveY(hiddenPosition, 0.75f).SetEase(Ease.OutQuad);
     }
 }
