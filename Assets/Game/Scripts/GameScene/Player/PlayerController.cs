@@ -4,23 +4,42 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const string RUN_ANIM   = "_anim_run";
-    private const string PANIC_ANIM = "_anim_panic";
-
-    [SerializeField] private Animation animation;
-
-    public void Run()
+    private static PlayerController _instance = null;
+    public static PlayerController Instance
     {
-        animation.Play(RUN_ANIM);
+        get
+        {
+            return _instance;
+        }
     }
 
-    public void Panic()
+    [SerializeField] private float hiddenPosition;
+    [SerializeField] private float runningPosition;
+
+    void Awake()
     {
-        
+        _instance = this;
     }
 
-    public void UsePaw(Vector3 target)
+    void Start()
     {
-        
+        Vector3 pos = this.transform.localPosition;
+        pos.y = this.runningPosition;
+        this.transform.localPosition = pos;
+    }
+
+    void OnDestroy()
+    {
+        _instance = null;
+    }
+
+    public void ShowPlayerToRun()
+    {
+        this.transform.DOLocalMoveY(runningPosition, 0.75f).SetEase(Ease.OutQuad);
+    }
+
+    public void HidePlayerToAnswer()
+    {
+        this.transform.DOLocalMoveY(hiddenPosition, 0.75f).SetEase(Ease.OutQuad);
     }
 }
