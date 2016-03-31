@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShowPlayerToRun()
     {
+        this.transform.DOScale(Vector3.one, 0.75f).SetEase(Ease.OutQuad);
         this.transform.DOLocalMoveY(runningPosition, 0.75f).SetEase(Ease.OutQuad).OnComplete(
             delegate() 
             {
@@ -55,6 +56,8 @@ public class PlayerController : MonoBehaviour
     public void HidePlayerToAnswer()
     {
         this.catRunningAnim.Stop();
+        Vector3 zoomOut = new Vector3(2.0f, 2.0f, 2.0f);
+        this.transform.DOScale(zoomOut, 0.75f).SetEase(Ease.OutQuad);
         this.transform.DOLocalMoveY(hiddenPosition, 0.75f).SetEase(Ease.OutQuad);
     }
 }
