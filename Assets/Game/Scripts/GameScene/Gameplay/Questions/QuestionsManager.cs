@@ -15,6 +15,9 @@ public class QuestionsManager : MonoBehaviour
         }
     }
 
+    public delegate void OnQuestionCategoryCompletedDelegate(QUESTION_CATEGORY category);
+    public event OnQuestionCategoryCompletedDelegate OnQuestionCategoryCompleted = null;
+
     public delegate void QuestionAskedDelegate(string q);
     public event QuestionAskedDelegate QuestionAsked = null;
 
@@ -219,6 +222,11 @@ public class QuestionsManager : MonoBehaviour
                 if(this.questionsAnswered >= questionsPerWall)
                 {
                     PathManager.Instance.UnlockWall();
+
+                    if(this.OnQuestionCategoryCompleted != null)
+                    {
+                        this.OnQuestionCategoryCompleted((QUESTION_CATEGORY)this.categoryLevel);
+                    }
 
                     if(this.categoryLevel == (int)QUESTION_CATEGORY.FIVE_LETTERS)
                     {
