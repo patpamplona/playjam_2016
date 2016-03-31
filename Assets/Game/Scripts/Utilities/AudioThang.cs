@@ -12,6 +12,9 @@ public class AudioThang : MonoBehaviour
         }
     }
 
+    [SerializeField] private AudioSource bgm_mi;
+    [SerializeField] private AudioSource bgm_ffx;
+    [SerializeField] private AudioSource bgm_mario;
     [SerializeField] private AudioSource correct;
     [SerializeField] private AudioSource incorrect;
 
@@ -24,6 +27,27 @@ public class AudioThang : MonoBehaviour
     void OnDestroy()
     {
         _instance = null;
+    }
+
+    public void PlayMainBGM()
+    {
+        this.bgm_ffx.Stop();
+        this.bgm_mario.Stop();
+        this.bgm_mi.Play();
+    }
+
+    public void PlayVictory()
+    {
+        this.bgm_ffx.Play();
+        this.bgm_mario.Stop();
+        this.bgm_mi.Stop();
+    }
+
+    public void PlayGameOver()
+    {
+        this.bgm_ffx.Stop();
+        this.bgm_mario.Play();
+        this.bgm_mi.Stop();
     }
 
     public void PlayCorrect()
