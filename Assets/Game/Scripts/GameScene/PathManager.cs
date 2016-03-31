@@ -41,6 +41,8 @@ public class PathManager : MonoBehaviour
         this.wall.transform.DOLocalMoveX(0.0f, 1.0f).OnComplete(
         delegate() 
         {
+            PlayerController.Instance.HidePlayerToAnswer();
+
             QuestionsManager.Instance.ChangeCategory();
             QuestionsManager.Instance.AskAQuestion();
             QuestionsManager.Instance.ToggleQuestionnaire(true);
@@ -49,12 +51,14 @@ public class PathManager : MonoBehaviour
 
     public void UnlockWall()
     {
+        PlayerController.Instance.ShowPlayerToRun();
+
         QuestionsManager.Instance.ToggleQuestionnaire(false);
         this.wall.transform.DOLocalMoveX(-this.wall.transform.localScale.x, 1.0f).OnComplete(
         delegate()
         {
             this.isBlockedByWall = false;
-            this.wall.SetActive(false); 
+            this.wall.SetActive(false);
         });
     }
 
