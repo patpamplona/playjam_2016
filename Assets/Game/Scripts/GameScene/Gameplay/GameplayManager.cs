@@ -13,14 +13,16 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public delegate void CentralizedUpdateDelegate(float deltaTime, float gameRunTime, float timeLimit, float ratioBeforeGameOver);
+    public delegate void OnGameStartedDelegate();
+    public event OnGameStartedDelegate OnGameStarted = null;
+
+    public delegate void CentralizedUpdateDelegate(float deltaTime, float gameRunTime);
     public event CentralizedUpdateDelegate CentralizedUpdate = null;
 
-    public delegate void CentralizedTimeUpDelegate();
-    public event CentralizedTimeUpDelegate CentralizedTimeUp = null; 
+    public delegate void OnPlayerExitedDelegate();
+    public event OnPlayerExitedDelegate OnPlayerExited = null;
 
     [SerializeField] private GameObject pauseOverlay;
-    [SerializeField] private float timeLimit = 120.0f;
 
     private float runTime  = 0.0f;
     private bool  gameOver = false;
@@ -31,6 +33,14 @@ public class GameplayManager : MonoBehaviour
         get
         {
             return this.gameStarted && !gameOver;
+        }
+    }
+
+    public bool GameOver
+    {
+        get
+        {
+            return this.gameOver;
         }
     }
 
@@ -52,6 +62,11 @@ public class GameplayManager : MonoBehaviour
         instance = null;
         this.runTime = 0.0f;
         this.gameOver = false;
+
+        //Clear the events
+        this.OnGameStarted     = null;
+        this.CentralizedUpdate = null;
+        this.OnPlayerExited    = null;
     }
 
     void Update()
@@ -63,25 +78,9 @@ public class GameplayManager : MonoBehaviour
 
         this.runTime += Time.deltaTime;
 
-        bool timeUp = this.runTime >= this.timeLimit;
-
         if(CentralizedUpdate != null)
         {
-            float ratioBeforeGameOver = this.runTime / this.timeLimit;
-            CentralizedUpdate(Time.deltaTime, this.runTime, this.timeLimit, ratioBeforeGameOver);
-        }
-
-        if(timeUp)
-        {
-            this.gameOver = true;
-
-            if(CentralizedTimeUp != null)
-            {
-                CentralizedTimeUp();
-            }
-
-            InfoMessenger.SetPlayerWin(false);
-            SceneManager.LoadScene("EndScene");
+            CentralizedUpdate(Time.deltaTime, this.runTime);
         }
     }
 
@@ -89,12 +88,39 @@ public class GameplayManager : MonoBehaviour
     {
         this.gameStarted = true;
         this.pauseOverlay.SetActive(false);
+
+        if(this.OnGameStarted != null)
+        {
+            this.OnGameStarted();
+        }
+    }
+
+    public void PlayerGotCaught()
+    {
+        this.EndGame(false);
     }
 
     public void PlayerExitsSafely()
     {
+        if(this.OnPlayerExited != null)
+        {
+            this.OnPlayerExited();
+        }
+        else
+        {
+            this.EndGame(true);
+        }
+    }
+
+    public void OnPlayerExitedEventsCompleted()
+    {
+        this.EndGame(true);
+    }
+
+    private void EndGame(bool win)
+    {
         this.gameOver = true;
-        InfoMessenger.SetPlayerWin(true);
+        InfoMessenger.SetPlayerWin(win);
         SceneManager.LoadScene("EndScene");
     }
 }

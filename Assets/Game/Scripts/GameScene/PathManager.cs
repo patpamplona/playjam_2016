@@ -26,8 +26,16 @@ public class PathManager : MonoBehaviour
     [SerializeField] private GameObject wall;
     [SerializeField] private GameObject endOfTunnel;
 
-    [SerializeField] private float distancePerWall = 10.0f;
-    private float distanceTravelled = 0.0f;
+    [SerializeField] private float timePerWall = 4.0f;
+    private float timeForWall = 0.0f;
+
+    public float TimePerWall
+    {
+        get
+        {
+            return this.timePerWall;
+        }
+    }
 
     public void BlockByWall()
     {
@@ -109,10 +117,10 @@ public class PathManager : MonoBehaviour
             this.frontFloor = f;
         }
 
-        this.distanceTravelled += posDelta;
-        if(this.distanceTravelled >= this.distancePerWall)
+        this.timeForWall += Time.deltaTime;
+        if(this.timeForWall >= this.timePerWall)
         {
-            this.distanceTravelled = 0.0f;
+            this.timeForWall = 0.0f;
             this.BlockByWall();
         }
     }
