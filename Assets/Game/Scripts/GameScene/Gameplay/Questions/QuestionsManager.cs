@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,6 +30,7 @@ public class QuestionsManager : MonoBehaviour
     [SerializeField] private Transform choicesParent;
 
     [SerializeField] private GameObject mainObject;
+    [SerializeField] private Image warningObject;
 
     public void ToggleQuestionnaire(bool toggle)
     {
@@ -227,6 +230,14 @@ public class QuestionsManager : MonoBehaviour
                     this.InitializeSet();
                     this.AskAQuestion();
                 }
+            }
+            else
+            {
+                DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 1.0f, 0.75f).OnComplete(
+                    delegate() 
+                    {
+                        DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 0.0f, 0.75f);
+                    });
             }
         }
     }
