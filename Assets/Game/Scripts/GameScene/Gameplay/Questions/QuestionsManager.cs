@@ -33,11 +33,13 @@ public class QuestionsManager : MonoBehaviour
     [SerializeField] private Transform choicesParent;
 
     [SerializeField] private GameObject mainObject;
+    [SerializeField] private GameObject submitButton;
     [SerializeField] private Image warningObject;
 
     public void ToggleQuestionnaire(bool toggle)
     {
         this.mainObject.SetActive(toggle);
+        this.submitButton.SetActive(toggle);
     }
 
     private List<LetterButton> letterButtons;
@@ -88,6 +90,8 @@ public class QuestionsManager : MonoBehaviour
         instance = null;
         this.letterButtons.Clear();
         this.answerButtons.Clear();
+        this.OnQuestionCategoryCompleted = null;
+        this.QuestionAsked = null;
     }
 
     public void ChangeCategory()
@@ -172,6 +176,7 @@ public class QuestionsManager : MonoBehaviour
             this.answerInBoard[c] = ' ';
         }
 
+        Debug.Log("Gonna ask the question " + this.currentQuestion.question);
         if(this.QuestionAsked != null)
         {
             this.QuestionAsked(this.currentQuestion.question);
@@ -219,6 +224,8 @@ public class QuestionsManager : MonoBehaviour
                 this.questionsAnswered++;
                 this.ResetButtons();
 
+                AudioThang.Instance.PlayCorrect();
+
                 if(this.questionsAnswered >= questionsPerWall)
                 {
                     PathManager.Instance.UnlockWall();
@@ -241,6 +248,7 @@ public class QuestionsManager : MonoBehaviour
             }
             else
             {
+                AudioThang.Instance.PlayIncorrect();
                 DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 1.0f, 0.75f).OnComplete(
                     delegate() 
                     {

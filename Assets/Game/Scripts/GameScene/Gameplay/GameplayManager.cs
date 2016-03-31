@@ -88,6 +88,7 @@ public class GameplayManager : MonoBehaviour
     {
         this.gameStarted = true;
         this.pauseOverlay.SetActive(false);
+        QuestionsManager.Instance.ToggleQuestionnaire(false);
 
         if(this.OnGameStarted != null)
         {
