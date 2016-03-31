@@ -83,6 +83,10 @@ public class RoomTime : MonoBehaviour
             this.catTweener = this.cat.transform.DOLocalMoveX(newWall.transform.localPosition.x - cat.sizeDelta.x, PathManager.Instance.TimePerWall).SetDelay(0.75f);
             this.dogTweener = this.dog.transform.DOLocalMoveX(newWall.transform.localPosition.x - dog.sizeDelta.x, this.timeLimit);
         }
+        else
+        {
+            this.cat.transform.DOLocalMoveX(512.0f, 2.0f).SetDelay(0.75f);
+        }
     }
 
     private void PlayExitAnimation()
