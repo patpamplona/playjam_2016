@@ -24,7 +24,10 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseOverlay;
 
+    [SerializeField] private float timePerRandomAngerSound = 3.5f;
+
     private float runTime  = 0.0f;
+    private float angrySoundTimer = 0.0f;
     private bool  gameOver = false;
 
     private bool gameStarted = false;
@@ -48,7 +51,7 @@ public class GameplayManager : MonoBehaviour
     {
         instance = this;
 
-        this.runTime  = 0.0f;
+        this.runTime  = this.angrySoundTimer = 0.0f;
         this.gameOver = false;
     }
 
@@ -60,7 +63,7 @@ public class GameplayManager : MonoBehaviour
     void OnDestroy()
     {
         instance = null;
-        this.runTime = 0.0f;
+        this.runTime = this.angrySoundTimer = 0.0f;
         this.gameOver = false;
 
         //Clear the events
@@ -81,6 +84,25 @@ public class GameplayManager : MonoBehaviour
         if(CentralizedUpdate != null)
         {
             CentralizedUpdate(Time.deltaTime, this.runTime);
+        }
+
+        this.angrySoundTimer += Time.deltaTime;
+        if(this.angrySoundTimer >= this.timePerRandomAngerSound)
+        {
+            this.angrySoundTimer = 0.0f;
+
+            int ranDog = Random.Range(0, 101);
+            int ranCat = Random.Range(0, 101);
+
+            if(ranDog >= 71)
+            {
+                AudioThang.Instance.PlayAngryDog();
+            }
+
+            if(ranCat >= 71)
+            {
+                AudioThang.Instance.PlayAngryCat();
+            }
         }
     }
 
