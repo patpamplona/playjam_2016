@@ -80,12 +80,12 @@ public class RoomTime : MonoBehaviour
 
         if(newWall != null)
         {
-            this.catTweener = this.cat.transform.DOLocalMoveX(newWall.transform.localPosition.x - cat.sizeDelta.x, PathManager.Instance.TimePerWall).SetDelay(0.75f);
-            this.dogTweener = this.dog.transform.DOLocalMoveX(newWall.transform.localPosition.x - dog.sizeDelta.x, this.timeLimit);
+            this.catTweener = this.cat.transform.DOLocalMoveX(newWall.transform.localPosition.x - cat.sizeDelta.x, PathManager.Instance.TimePerWall).SetEase(Ease.Linear).SetDelay(0.75f);
+            this.dogTweener = this.dog.transform.DOLocalMoveX(newWall.transform.localPosition.x - dog.sizeDelta.x, this.timeLimit).SetEase(Ease.Linear);
         }
         else
         {
-            this.cat.transform.DOLocalMoveX(512.0f, 2.0f).SetDelay(0.75f);
+            this.cat.transform.DOLocalMoveX(512.0f, 2.0f).SetEase(Ease.Linear).SetDelay(0.75f);
         }
     }
 
