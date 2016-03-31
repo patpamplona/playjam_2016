@@ -86,22 +86,25 @@ public class GameplayManager : MonoBehaviour
             CentralizedUpdate(Time.deltaTime, this.runTime);
         }
 
-        this.angrySoundTimer += Time.deltaTime;
-        if(this.angrySoundTimer >= this.timePerRandomAngerSound)
+        if(AudioThang.Instance != null)
         {
-            this.angrySoundTimer = 0.0f;
-
-            int ranDog = Random.Range(0, 101);
-            int ranCat = Random.Range(0, 101);
-
-            if(ranDog >= 71)
+            this.angrySoundTimer += Time.deltaTime;
+            if(this.angrySoundTimer >= this.timePerRandomAngerSound)
             {
-                AudioThang.Instance.PlayAngryDog();
-            }
+                this.angrySoundTimer = 0.0f;
 
-            if(ranCat >= 71)
-            {
-                AudioThang.Instance.PlayAngryCat();
+                int ranDog = Random.Range(0, 101);
+                int ranCat = Random.Range(0, 101);
+
+                if(ranDog >= 71)
+                {
+                    AudioThang.Instance.PlayAngryDog();
+                }
+
+                if(ranCat >= 71)
+                {
+                    AudioThang.Instance.PlayAngryCat();
+                }
             }
         }
     }

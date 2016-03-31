@@ -6,7 +6,10 @@ public class TitleScene : MonoBehaviour
 {
     void Start()
     {
-        AudioThang.Instance.PlayMainBGM();
+        if(AudioThang.Instance != null)
+        {
+            AudioThang.Instance.PlayMainBGM();
+        }
     }
 
     public void OnPlayTapped()

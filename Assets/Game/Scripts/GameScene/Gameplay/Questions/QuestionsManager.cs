@@ -224,7 +224,10 @@ public class QuestionsManager : MonoBehaviour
                 this.questionsAnswered++;
                 this.ResetButtons();
 
-                AudioThang.Instance.PlayCorrect();
+                if(AudioThang.Instance != null)
+                {
+                    AudioThang.Instance.PlayCorrect();
+                }
 
                 if(this.questionsAnswered >= questionsPerWall)
                 {
@@ -248,7 +251,11 @@ public class QuestionsManager : MonoBehaviour
             }
             else
             {
-                AudioThang.Instance.PlayIncorrect();
+                if(AudioThang.Instance != null)
+                {
+                    AudioThang.Instance.PlayIncorrect();
+                }
+
                 DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 1.0f, 0.75f).OnComplete(
                     delegate() 
                     {
