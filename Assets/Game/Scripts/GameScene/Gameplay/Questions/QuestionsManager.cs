@@ -256,7 +256,7 @@ public class QuestionsManager : MonoBehaviour
                     AudioThang.Instance.PlayIncorrect();
                 }
 
-                DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 1.0f, 0.75f).OnComplete(
+                DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 0.5f, 0.75f).OnComplete(
                     delegate() 
                     {
                         DOTween.ToAlpha(() => this.warningObject.color, c => this.warningObject.color = c, 0.0f, 0.75f);
